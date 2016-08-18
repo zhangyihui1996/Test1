@@ -1,0 +1,32 @@
+<taskdef uri="antlib:org.sonar.ant" resource="org/sonar/ant/antlib.xml">
+        <classpath path="${env.SONAR-ANT-TASK.JAR}"/>
+    </taskdef>
+
+    <target name="sonar">
+        <sonar:sonar key="${sonar.project.key}" version="${sonar.project.version}" xmlns:sonar="antlib:org.sonar.ant">
+            <sources>
+                <path location="${src.dir}" />
+            </sources>
+
+            <property key="sonar.projectName" value="jacoco_demo" />
+            <property key="sonar.sourceEncoding" value="UTF-8" />
+            <property key="sonar.dynamicAnalysis" value="reuseReports" />
+            <property key="sonar.surefire.reportsPath" value="${junit.dir}" />
+            <property key="sonar.core.codeCoveragePlugin" value="jacoco" />
+            <property key="sonar.jacoco.reportPath" value="${basedir}/ut.exec" />
+            <property key="sonar.jacoco.itReportPath" value="${basedir}/uat.exec" />
+
+            <tests>
+                <path location="${src.test.dir}" />
+            </tests>
+
+            <binaries>
+                <path location="${build.src.class}" />
+                <path location="${build.test.class}" />
+            </binaries>
+
+            <libraries>
+                <path location="${build.lib.dir}" />
+            </libraries>
+        </sonar:sonar>
+    </target>
